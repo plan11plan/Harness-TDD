@@ -1,0 +1,22 @@
+# _workspace/POST_questions/gate_coverage.txt  (게이트5 — 커버리지 바닥)
+$ ./gradlew clean test          # 전체 73 테스트 통과 → jacocoTestReport 자동 생성
+$ # build/reports/jacoco/test/jacocoTestReport.xml 파싱 (HTML: build/reports/jacoco/test/html/index.html)
+
+질문 패키지 커버리지 (수기 코드 — 생성 QueryDSL QQuestion 19줄 제외)
+  LINE   = 100/102 = 98.0%
+  BRANCH = 18/22   = 81.8%
+  (raw, 생성 Q-class 포함: line 82.6% / branch 81.8%)
+
+계층별(패키지, 전체 스위트 기준)
+  question.domain          line 95.0%  branch 83.3%   (고위험 동작은 QuestionService)
+  question.application     line 100.0% branch 100.0%
+  question.interfaces      line 100.0% branch  —
+  question.infrastructure  line 100.0% branch  —
+  (question.*.dto 는 리스크 프로필상 커버리지 제외 대상)
+
+고위험 파일 (리스크 바닥 90/85)
+  QuestionService   line 100.0%  branch 100.0%   ✓ (부모 소유권)
+  QuestionFacade    line 100.0%  branch 100.0%   ✓ (카테고리 소유권·태그 동시성)
+  Question          line  95.0%  branch  83.3%   (기본 invariant=base 80/70 충족)
+
+판정: 리스크 바닥(base line≥80/branch≥70, 고위험 파일 90/85) 충족 → 게이트5 PASS.

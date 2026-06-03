@@ -1,0 +1,19 @@
+# _workspace/POST_questions/domain/gate_red.txt  (게이트1 RED 발췌 — 전체 로그는 gate_red.raw.txt)
+$ ./gradlew test --tests "*QuestionServiceTest"
+
+QuestionService 단위 — 질문 생성 규칙 > 내용이 비어있으면 생성을 거부한다(VALIDATION_ERROR) FAILED
+    java.lang.AssertionError:
+    Expecting code to raise a throwable.
+        at QuestionServiceTest.내용이_비어있으면_생성을_거부한다(QuestionServiceTest.java:69)
+
+QuestionService 단위 — 질문 생성 규칙 > 존재하지 않는 부모면 PARENT_NOT_FOUND FAILED
+    java.lang.AssertionError:
+    Expecting code to raise a throwable.
+        at QuestionServiceTest.존재하지_않는_부모면_PARENT_NOT_FOUND(QuestionServiceTest.java:60)
+
+7 tests completed, 6 failed
+BUILD FAILED in 6s
+
+# 판정: 컴파일 에러도 런타임 예외도 아닌 'assertion'에서 실패 → 깨끗한 RED(게이트1 ✓).
+#       골격(Question.create/QuestionService.create)이 안전한 기본값만 반환·검증 미적용이라
+#       의도한 단언에서 빨개졌다. (통과 1건=getOwned 는 표준 조회라 선구현)

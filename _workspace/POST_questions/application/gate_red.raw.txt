@@ -1,0 +1,41 @@
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :compileTestJava
+> Task :processTestResources UP-TO-DATE
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :test
+
+QuestionFacadeIntegrationTest > 동시에 같은 태그로 생성해도 활성 태그는 하나만 생성된다(고위험 동시성) FAILED
+    org.opentest4j.AssertionFailedError at QuestionFacadeIntegrationTest.java:127
+
+QuestionFacadeIntegrationTest > 남의 카테고리로 생성하면 CATEGORY_NOT_FOUND FAILED
+    java.lang.AssertionError at QuestionFacadeIntegrationTest.java:77
+
+QuestionFacadeIntegrationTest > 질문을 생성하면 DB에 저장되고 상세를 반환한다 FAILED
+    java.lang.AssertionError at QuestionFacadeIntegrationTest.java:63
+
+QuestionFacadeIntegrationTest > tagNames를 주면 find-or-create 되어 연결된다(중복 이름은 1개) FAILED
+    java.lang.AssertionError at QuestionFacadeIntegrationTest.java:93
+
+2026-06-02T20:28:49.876+09:00  INFO 38490 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T20:28:49.888+09:00  INFO 38490 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-02T20:28:49.894+09:00  INFO 38490 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+> Task :test FAILED
+
+4 tests completed, 4 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///Users/jins/Desktop/2026%20Project/jobterview/harness-question-create/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 17s
+5 actionable tasks: 3 executed, 2 up-to-date

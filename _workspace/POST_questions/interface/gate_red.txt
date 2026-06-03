@@ -1,0 +1,20 @@
+# _workspace/POST_questions/interface/gate_red.txt  (게이트1 RED 발췌 — 전체 로그는 gate_red.raw.txt)
+$ ./gradlew test --tests "*QuestionE2ETest"      # @SpringBootTest(RANDOM_PORT) + 실제 HTTP + 인증
+
+QuestionE2ETest > POST /questions 유효 요청 → 201 + Location + 상세 FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "프로세스와 스레드 차이는?"
+     but was: ""
+        at QuestionE2ETest.유효한_요청으로_생성하면_201과_상세를_반환한다(QuestionE2ETest.java:32)
+
+QuestionE2ETest > POST /questions 남의 카테고리 → 404 CATEGORY_NOT_FOUND FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: 404 NOT_FOUND
+     but was: 201 CREATED
+        at QuestionE2ETest.남의_카테고리로_생성하면_404를_반환한다(QuestionE2ETest.java:78)
+
+4 tests completed, 2 failed
+BUILD FAILED in 16s
+
+# 판정: 골격 컨트롤러가 facade 위임 없이 기본 응답만 반환 → 의도한 'assertion'에서 빨개짐(게이트1 ✓).
+#       400(@Valid)·401(Security) 케이스는 프레임워크가 처리해 골격에서도 통과(신규 동작 아님).

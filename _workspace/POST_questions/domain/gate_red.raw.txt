@@ -1,0 +1,49 @@
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+
+> Task :compileTestJava
+Note: /Users/jins/Desktop/2026 Project/jobterview/harness-question-create/src/test/java/jobterview/server/question/targetbehavior/QuestionTargetBehaviorE2ETest.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processTestResources
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :test
+
+QuestionService 단위 — 질문 생성 규칙 > 루트 질문을 생성하면 내용·카테고리가 담겨 저장된다 FAILED
+    java.lang.AssertionError at QuestionServiceTest.java:39
+
+QuestionService 단위 — 질문 생성 규칙 > 내용이 2000자를 초과하면 생성을 거부한다 FAILED
+    java.lang.AssertionError at QuestionServiceTest.java:80
+
+QuestionService 단위 — 질문 생성 규칙 > visibility가 null이면 PRIVATE 기본값으로 저장된다 FAILED
+    org.opentest4j.AssertionFailedError at QuestionServiceTest.java:93
+
+QuestionService 단위 — 질문 생성 규칙 > 내용이 비어있으면 생성을 거부한다(VALIDATION_ERROR) FAILED
+    java.lang.AssertionError at QuestionServiceTest.java:69
+
+QuestionService 단위 — 질문 생성 규칙 > 존재하지 않는 부모면 PARENT_NOT_FOUND FAILED
+    java.lang.AssertionError at QuestionServiceTest.java:60
+
+QuestionService 단위 — 질문 생성 규칙 > 부모가 있으면 꼬리질문으로 저장된다 FAILED
+    java.lang.AssertionError at QuestionServiceTest.java:52
+
+7 tests completed, 6 failed
+
+> Task :test FAILED
+
+[Incubating] Problems report is available at: file:///Users/jins/Desktop/2026%20Project/jobterview/harness-question-create/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///Users/jins/Desktop/2026%20Project/jobterview/harness-question-create/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 6s
+5 actionable tasks: 4 executed, 1 up-to-date

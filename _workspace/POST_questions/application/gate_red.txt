@@ -1,0 +1,24 @@
+# _workspace/POST_questions/application/gate_red.txt  (게이트1 RED 발췌 — 전체 로그는 gate_red.raw.txt)
+$ ./gradlew test --tests "*QuestionFacadeIntegrationTest"      # Testcontainers MySQL
+
+QuestionFacadeIntegrationTest > 질문을 생성하면 DB에 저장되고 상세를 반환한다 FAILED
+    java.lang.AssertionError:
+    Expecting actual not to be null
+        at QuestionFacadeIntegrationTest.java:63
+
+QuestionFacadeIntegrationTest > 남의 카테고리로 생성하면 CATEGORY_NOT_FOUND FAILED
+    java.lang.AssertionError:
+    Expecting code to raise a throwable.
+        at QuestionFacadeIntegrationTest.java:77
+
+QuestionFacadeIntegrationTest > 동시에 같은 태그로 생성해도 활성 태그는 하나만 생성된다(고위험 동시성) FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: 1L
+     but was: 0L
+        at QuestionFacadeIntegrationTest.java:127
+
+4 tests completed, 4 failed
+BUILD FAILED in 17s
+
+# 판정: Spring 컨텍스트·Testcontainers MySQL 정상 기동 후 'assertion'에서 실패 → 깨끗한 RED(게이트1 ✓).
+#       골격 Facade.create 가 카테고리 검증·저장·태그 연결 없이 기본값만 반환해 의도한 단언에서 빨개짐.

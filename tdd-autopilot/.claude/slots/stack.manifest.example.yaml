@@ -1,0 +1,42 @@
+# 스택 매니페스트 (프로젝트별 슬롯) — 면훈소 예시
+# 오케스트레이터·locked-evaluator가 '그대로 실행/대조'하는 정확값. 추론 금지.
+# 키 이름은 엔진(locked-evaluator·오케스트레이터)이 참조하는 변수와 1:1로 일치해야 한다.
+
+language: java-21
+framework: spring-boot-4
+
+build_cmd: "./gradlew build"
+test_cmd: "./gradlew test"
+test_select: '--tests "{pattern}"'            # {pattern} = FQCN 또는 와일드카드
+
+coverage_cmd: "./gradlew jacocoTestReport"
+coverage_report: "build/reports/jacoco/test/jacocoTestReport.xml"
+coverage_parse: "jacoco-xml"                   # line/branch 추출 방식 식별자
+
+arch_cmd: './gradlew test --tests "*ArchUnitTest"'  # (선택) 아키텍처 ★룰 있을 때만. 없으면 "" → 게이트4 생략·ArchUnit 미생성
+arch_tool: archunit                                  # (선택) 아키텍처 룰 없으면 비움
+
+mutation_cmd: "./gradlew pitest"               # (선택) 심층 검사용 — risk-profile 고위험 경로 자동
+mutation_tool: pit
+
+# 게이트 판정 신호 — locked-evaluator가 빌드 로그에서 찾는 정규 신호(스택마다 다름)
+assertion_signals: ["AssertionFailedError", "ComparisonFailure", "AssertionError", "expected:.*but was:"]
+compile_error_signals: ["error:", "Compilation failed", "cannot find symbol"]
+
+# 테스트 레벨(보편) ↔ 프로젝트 코드/테스트 위치(아키텍처 매핑)
+# 엔진은 'unit/integration/e2e'만 알고, 그게 어느 계층·패턴인지는 여기서 정한다.
+levels:
+  unit:        { layer: domain,      pattern: '*.domain.*Test',                       isolation: "의존성 격리(fake/mock)" }
+  integration: { layer: application, pattern: '*.application.*FacadeTest,*IntegrationTest', isolation: "실제 인프라(Testcontainers)" }
+  e2e:         { layer: interface,   pattern: '*.interfaces.*E2ETest',                isolation: "실제 HTTP+인증(RANDOM_PORT)" }
+
+# 목표 동작(에이전트 비공개) 경로
+target_behavior_dir: "_target_behavior/"
+target_behavior_run: '--tests "*TargetBehaviorE2ETest"'
+
+# 작업 브랜치/커밋/PR (오케스트레이터가 그대로 실행 — 자동 머지 금지)
+git:
+  base_branch:   "exp/results"
+  branch_prefix: "harness"
+  auto_merge:    false
+  pr_cmd:        'gh pr create --base {base_branch} --head {branch} --title "{title}" --body-file {body_file}'
